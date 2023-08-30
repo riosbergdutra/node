@@ -5,7 +5,7 @@ class pessoa{
         this.altura = altura,
         this.genero = genero
     }
-    nomeIdade = function() {
+    infos = function() {
         return this.nome + " " + this.idade
     }
 }
@@ -23,6 +23,34 @@ class professor extends pessoa {
         this.salario = salario
         this.turmas = turmas
     }
+    infos = function() {
+        return this.nome + " " + this.turma + " " + this.salario
+    }
 }
-const prof = new professor("Leandro", 24,1.88,"M",100000,16)
+
+
+
+class Aluno extends pessoa { 
+    constructor(nome, idade, altura, genero, nota, turma, RM){
+    super(
+    nome,
+    idade,
+    altura,
+    genero
+    )
+    this.nota = nota
+    this.turma = turma,
+    this.RM = RM
+}
+infos = function() {
+    return this.nome + " " + this.idade + " " + this.RM
+}
+}
+
+    const prof = new professor("Leandro", 25,1.88,"M",100000,[12,14,16])
+const estudante = new Aluno("Marcos", 16, 1.76, "M", 9.76, 14, 42564)
 console.log(prof)
+console.log(estudante)
+
+console.log(prof.infos)
+console.log(estudante.infos)
