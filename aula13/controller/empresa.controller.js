@@ -18,7 +18,7 @@ const empresas = [
 
 const find = (req, res) => {
     const id = req.params.id;
-    let found = false;
+    let found = false; 
     empresas.map(function(valor){
         if(valor.id == id){
             found = true
@@ -36,13 +36,29 @@ const findAllEmpresa = (req, res) => {
 
 const createEmpresa = (req, res) => {
     const empresa = req.body;
-    if (req.body.nome == null) {
-        return res.send({ message: "corpo da mensagem está vazio" }); 
+    
+    if(Object.keys(empresa).length === 0){
+        return res.status(400).send({message: "o corpo da mensagem está vazio"})
     }
+
+    if(!empresa.id){
+        return res.status(400).send({message: "O campo 'id' não foi encontrado"})
+    }
+    if(!empresa.nome){
+        return res.status(400).send({message: "O campo 'nome' não foi encontrado"})
+    }
+    if(!empresa.numFuncionarios){
+        return res.status(400).send({message: "O campo 'numFuncionarios' não foi encontrado"})
+    }
+
     const novaEmpresa = req.body;
+    novaEmpresa.nacionalidade = "brasileira"
     empresas.push(novaEmpresa);
-    res.send(empresas);
+    res.status(201).send(empresas);
+    
+
 }
+
 
 module.exports = {
     find,
