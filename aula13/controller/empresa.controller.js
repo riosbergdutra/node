@@ -18,7 +18,16 @@ const empresas = [
 
 const find = (req, res) => {
     const id = req.params.id;
-    res.send(empresas.find(empresa => empresa.id === Number(id)));
+    let found = false;
+    empresas.map(function(valor){
+        if(valor.id == id){
+            found = true
+            return res.send(valor)
+        }
+    });
+    if(!found){
+      res.status(404).send({message: "não foi encontrado"}) 
+    }
 }
 
 const findAllEmpresa = (req, res) => {
@@ -26,8 +35,9 @@ const findAllEmpresa = (req, res) => {
 }
 
 const createEmpresa = (req, res) => {
-    if(req.body.nome == null) {
-        return res.send ({menssage:"corpo da mensagem esta vazio"})
+    const empresa = req.body;
+    if (req.body.nome == null) {
+        return res.send({ message: "corpo da mensagem está vazio" }); 
     }
     const novaEmpresa = req.body;
     empresas.push(novaEmpresa);
