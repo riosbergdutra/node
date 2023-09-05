@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
-const empresa = require ("./router/empresa.router")
+const empresa = require ("./router/empresa.router");
+const connectToDataBase = require("./database/database");
+
+connectToDataBase()
 
 const port = 4500;
 
