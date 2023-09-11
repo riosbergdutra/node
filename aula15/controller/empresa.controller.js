@@ -1,35 +1,41 @@
 const Empresa = require("../model/empresa")
 
-const find = (req, res) => {
+const find = async (req, res) => {
     const id = req.params.id;
-    return  res.status(200).send(Empresa.find())
+    try {
+        const empresa = await Empresa.findById(id).exec();
+        return res.status(200).send(empresa);
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar empresa por ID" });
+    }
 }
 
-const findAllEmpresa = (req, res) => {
-    res.send(empresas);
+const findAllEmpresa = async (req, res) => {
+    try {
+        const empresas = await Empresa.find().exec();
+        return res.status(200).send(empresas);
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar todas as empresas" });
+    }
 }
 
-const createEmpresa = (req, res) => {
+const createEmpresa = async (req, res) => {
     const empresa = req.body;
-    
-    if(Object.keys(empresa).length === 0){
-        return res.status(400).send({message: "o corpo da mensagem está vazio"})
+
+    if (Object.keys(empresa).length === 0) {
+        return res.status(400).send({ message: "O corpo da mensagem está vazio" });
     }
 
-    if(!empresa.id){
-        return res.status(400).send({message: "O campo 'id' não foi encontrado"})
-    }
-    if(!empresa.nome){
-        return res.status(400).send({message: "O campo 'nome' não foi encontrado"})
-    }
-    if(!empresa.numFuncionarios){
-        return res.status(400).send({message: "O campo 'numFuncionarios' não foi encontrado"})
+    if (!empresa.nome || !empresa.numFuncionarios) {
+        return res.status(400).send({ message: "Campos 'nome' e 'numFuncionarios' são obrigatórios" });
     }
 
-    const novaEmpresa = req.body;
-    novaEmpresa.nacionalidade = "brasileira"
-    empresas.push(novaEmpresa);
-    res.status(201).send(empresas);
+    try {
+        const novaEmpresa = await Empresa.create(empresa);
+        return res.status(201).send(novaEmpresa);
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao criar a empresa" });
+    }
 }
 
 const updateEmpresa = (req, res) => {

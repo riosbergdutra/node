@@ -3,7 +3,7 @@ const empresa = require("../controller/empresa.controller");
 
 router.get("/find/:id", empresa.find);
 router.get("/findAll", empresa.findAllEmpresa);
-router.post("/create", empresa.createEmpresa);
+app.post("/empresa/create", empresa.createEmpresa);
 
 router.put('/update/:id',empresa.updateEmpresa);
 

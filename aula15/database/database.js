@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 function connectToDataBase() {
     mongoose.connect('mongodb://localhost:27017/teste', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,  // Correção aqui
+    useUnifiedTopology: true,  
 }).then(() => {
     console.log("MongoDB conectato");
 }).catch((err) => {
