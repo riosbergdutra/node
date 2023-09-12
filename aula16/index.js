@@ -14,7 +14,7 @@ app.get("/", (req,res) => {
 })
 
 app.post("/login", async (req,res) => {
-    const {email,senha} = req.body
+   try{ const {email,senha} = req.body
     const user = await authService.loginService(email)
 
     if(!user){
@@ -25,6 +25,9 @@ app.post("/login", async (req,res) => {
         return res.status(400).send({message:"senha invalida"})
     }
     res.send(user)
+}catch(err){
+    console.log(`${err}`)
+}
 } )
 
 app.listen(port, () => {
